@@ -1,0 +1,35 @@
+ <div style="display: flex;">
+  <div class="create_div1" >
+    <p>Craete Contact :</p> 
+</div>
+  <div class="create_div1" >
+    <button mat-stroked-button (click)="createC()">Create Contact</button>
+  </div>
+  <div class="create_div">
+    <button mat-stroked-button (click)="sortintFilter('firstname')" color="primary">Sort BY First name</button>
+  </div>
+  <div class="create_div">
+    <button mat-stroked-button (click)="sortintFilter('lastname')" color="primary">Sort BY last name</button>
+  </div>
+  <div class="create_div">
+    <button mat-stroked-button (click)="sortintFilter('email')" color="primary">Sort BY email</button>
+  </div>
+    <mat-form-field class="search_input" appearence="fill">
+      <mat-label>search</mat-label>
+      <input type="text" matInput  placeholder="Type to search" [(ngModel)]="search_filter">
+    </mat-form-field>
+</div>
+
+
+<mat-card *ngFor="let contact of contact_list | searchFilter: search_filter | sortintFilter: sortdata"   class="card-dim" >
+    <div mat-card-avatar [ngStyle]= "{'background-image': 'url(http:\/\/localhost:8000/images/'+contact.imageName+')'}" ></div>
+    <mat-card-title [ngStyle]="{'margin-top' : '10px', 'margin-bottom' : '15px'}">{{contact.firstname | uppercase}} {{contact.lastname | uppercase}} </mat-card-title>
+    <mat-card-actions>
+        <button mat-stroked-button (click)="ContactFunc(contact, 'view')" color="primary">view</button>
+        <button mat-stroked-button (click)="ContactFunc(contact, 'edit')" color="primary">edit</button>
+        <button mat-stroked-button (click)="DeleteContact(contact._id)" color="warn">Delete</button>
+      </mat-card-actions>
+</mat-card>
+<app-dynamic ></app-dynamic>
+
+

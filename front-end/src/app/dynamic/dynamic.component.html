@@ -1,0 +1,196 @@
+<mat-card *ngIf="data.view== 'view'" class="card-dim">
+    <div mat-card-avatar [ngStyle]= "{'background-image': 'url(http:\/\/localhost:8000/images/'+data.image+')', 'max-height' : '50px', 'max-width' : '50px'}" ></div>
+    <mat-card-title [ngStyle]="{'margin-top' : '10px', 'margin-bottom' : '15px'}">{{data.firstname |uppercase}} {{data.lastname | uppercase}}</mat-card-title>
+    <mat-card-content>
+    <p>First Name: {{data.firstname}}</p>
+    <p>First Name: {{data.lastname}}</p>
+    <p>Phone Number: {{data.phone}}</p>
+    <p>Email: {{data.email}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="closeDialog()" >Close</button>
+      </mat-card-actions>
+</mat-card>
+
+
+
+<div *ngIf="data.view== 'edit'" class="card-dim">
+  <form  #edit="ngForm"  (ngSubmit)="editDetails(data)">
+    <mat-card>
+    <div mat-card-avatar [ngStyle]= "{'background-image': 'url(http:\/\/localhost:8000/images/'+data.image+')'}" ></div>
+    <mat-card-title [ngStyle]="{'margin-top' : '10px', 'margin-bottom' : '15px'}">Edit Your Profile</mat-card-title>
+
+    <mat-card-content >
+      <!-- First Name  -->
+      <p>
+        <mat-form-field appearance="fill" >
+          <mat-label>First Name:</mat-label>
+          <input matInput [(ngModel)]="data.firstname" required minlength="4" name="firstname" #firstname="ngModel" placeholder="Your First Name">
+          <mat-icon matSuffix>person_outline</mat-icon>
+          <mat-hint>Use your Firstname</mat-hint>
+          <mat-error *ngIf="!firstname.valid && firstname.touched">
+          <mat-error *ngIf="firstname.errors?.required">
+            This field is required
+          </mat-error>
+          <mat-error *ngIf="firstname.errors?.minlength">
+            Name must be at least 4 characters long.
+          </mat-error>
+          </mat-error>
+        </mat-form-field> 
+      </p>
+<!-- Last Name -->
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Last name:</mat-label>
+    <input matInput [(ngModel)]="data.lastname"  required name="lastname" #lastname="ngModel" placeholder="Your Last Name">
+    <mat-icon matSuffix>person_outline</mat-icon>
+    <mat-hint>Use your lastname</mat-hint>
+    <mat-error *ngIf="!lastname.valid && lastname.touched">
+      <mat-error *ngIf="lastname.errors?.required">
+        This field is required
+      </mat-error>
+      </mat-error>
+  </mat-form-field>
+</p>
+      <!-- Legacy form field -->
+<p>
+  <mat-form-field appearance="legacy">
+    <mat-label>Email Address:</mat-label>
+    <input matInput [(ngModel)]="data.email" [email]="true" name="email" required #email="ngModel" [pattern]="emailPattern" placeholder="Your email">
+    <mat-icon matSuffix>mail_outline</mat-icon>
+    <mat-hint>Input the fully qualified email address</mat-hint>
+    <mat-error *ngIf="!email.valid && email.touched">
+        Please Enter The Valid Email
+      </mat-error>
+  </mat-form-field>
+</p>
+<!-- Standard form field -->
+<p>
+  <mat-form-field appearance="standard">
+    <mat-label>Phone Number:</mat-label>
+    <input matInput [(ngModel)]="data.phone" required name="phone" #phone="ngModel" [pattern]="mobNumberPattern" placeholder="Your Phone">
+    <mat-icon matSuffix>phone</mat-icon>
+    <mat-hint>Phone number with Country code</mat-hint>
+    <mat-error *ngIf="!phone.valid && phone.touched">
+      <mat-error *ngIf="phone.errors?.required"> Phone Number is required</mat-error>
+      <mat-error *ngIf="phone.errors?.pattern"> Phone number must be atlest 10 numbers</mat-error>
+    </mat-error>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field>
+    <div>
+      <mat-toolbar>
+        <input matInput [value]='selected_file.length ? selected_file : "select image"' />
+      </mat-toolbar>
+  
+      <input
+        type="file"
+        id="fileInput"
+        name="fileInput"
+        accept="image/*" 
+        (change)="selectFiles($event)"
+      />
+    </div>
+  </mat-form-field>
+</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card-actions>
+    <button mat-button (click)="closeDialog()" >Close</button>
+    <button mat-button type="submit" >Save</button>
+  </mat-card-actions>
+  </form>
+</div>
+
+
+<div *ngIf="data.view== 'create'" class="card-dim">
+  <form  #createForm="ngForm"  (ngSubmit)="createContact(data)">
+    <mat-card>
+    <mat-card-title [ngStyle]="{'margin-top' : '10px', 'margin-bottom' : '15px'}">Edit Your Profile</mat-card-title>
+
+    <mat-card-content >
+      <!-- First Name  -->
+      <p>
+        <mat-form-field appearance="fill" >
+          <mat-label>First Name:</mat-label>
+          <input matInput [(ngModel)]="data.firstname" required minlength="4" name="firstname" #firstname="ngModel" placeholder="Your First Name">
+          <mat-icon matSuffix>person_outline</mat-icon>
+          <mat-hint>Use your Firstname</mat-hint>
+          <mat-error *ngIf="!firstname.valid && firstname.touched">
+          <mat-error *ngIf="firstname.errors?.required">
+            This field is required
+          </mat-error>
+          <mat-error *ngIf="firstname.errors?.minlength">
+            Name must be at least 4 characters long.
+          </mat-error>
+          </mat-error>
+        </mat-form-field> 
+      </p>
+<!-- Last Name -->
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Last name:</mat-label>
+    <input matInput [(ngModel)]="data.lastname"  required name="lastname" #lastname="ngModel" placeholder="Your Last Name">
+    <mat-icon matSuffix>person_outline</mat-icon>
+    <mat-hint>Use your lastname</mat-hint>
+    <mat-error *ngIf="!lastname.valid && lastname.touched">
+      <mat-error *ngIf="lastname.errors?.required">
+        This field is required
+      </mat-error>
+      </mat-error>
+  </mat-form-field>
+</p>
+      <!-- Legacy form field -->
+<p>
+  <mat-form-field appearance="legacy">
+    <mat-label>Email Address:</mat-label>
+    <input matInput [(ngModel)]="data.email" [email]="true" name="email" required #email="ngModel" [pattern]="emailPattern" placeholder="Your email">
+    <mat-icon matSuffix>mail_outline</mat-icon>
+    <mat-hint>Input the fully qualified email address</mat-hint>
+    <mat-error *ngIf="!email.valid && email.touched">
+        Please Enter The Valid Email
+      </mat-error>
+  </mat-form-field>
+</p>
+<!-- Standard form field -->
+<p>
+  <mat-form-field appearance="standard">
+    <mat-label>Phone Number:</mat-label>
+    <input matInput [(ngModel)]="data.phone" required name="phone" #phone="ngModel" [pattern]="mobNumberPattern" placeholder="Your Phone">
+    <mat-icon matSuffix>phone</mat-icon>
+    <mat-hint>Phone number with Country code</mat-hint>
+    <mat-error *ngIf="!phone.valid && phone.touched">
+      <mat-error *ngIf="phone.errors?.required"> Phone Number is required</mat-error>
+      <mat-error *ngIf="phone.errors?.pattern"> Phone number must be atlest 10 numbers</mat-error>
+    </mat-error>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field>
+    <div>
+      <mat-toolbar>
+        <input matInput [value]='selected_file.length ? selected_file : "select image"' />
+      </mat-toolbar>
+  
+      <input
+        type="file"
+        id="fileInput"
+        name="fileInput"
+        accept="image/*" 
+        (change)="selectFiles($event)"
+      />
+    </div>
+  </mat-form-field>
+</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card-actions>
+    <button mat-button (click)="closeDialog()" >Close</button>
+    <button mat-button type="submit" >Save</button>
+  </mat-card-actions>
+  </form>
+</div>
+
+
+
