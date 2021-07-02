@@ -4,9 +4,9 @@ Phone book is a single page web application used to maintain the contacts of the
 Rest API has been used to get, create, delete and update the contacts.
 
 Below are the screenshots of the application front end.
-![screenshot](https://github.com/rishiarya09/Phone_book/repo1.PNG)
+![screenshot](https://github.com/rishiarya09/Phone_book/blob/main/repo1.PNG)
 
-![screenshot](https://github.com/rishiarya09/Phone_book/repo2.PNG)
+![screenshot](https://github.com/rishiarya09/Phone_book/blob/main/repo2.PNG)
 
 ## Requirements
 
